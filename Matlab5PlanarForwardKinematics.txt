@@ -1,0 +1,16 @@
+% Provided variables
+q = [30 -20];
+
+% Find the pose of the end-effector and store in the variable T.
+T = trot2(30,'deg') * transl2(0.09,0.03) * trot2(-20,'deg') * transl2(0.07,0)
+
+% Find the x-coordinate in metres and store in the variable x.
+x = T(1,3)
+
+% Find the y-coordinate in metres and store in the variable y.
+y = T(2,3)
+
+% Find the orientation angle by examining elements of the
+% rotation submatrix, element (1,1) which is equal to cos(theta).
+% Store in the variable theta. 
+theta = acosd(T(1,1))
