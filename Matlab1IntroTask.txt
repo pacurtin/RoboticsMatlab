@@ -1,0 +1,20 @@
+% Calculate two plus two
+
+2+2
+
+% Calculate four minus seven
+
+4-7
+
+% Work out two times three
+
+2*3
+
+% Set the value of a as two
+
+a = 2
+
+
+% work out three times the value of a and set it to the variable b.
+
+b = 3*a

@@ -1,0 +1,17 @@
+%% Create the rotation matrix R for a -50 degree rotation 
+% representing the rotation of frame B with respect to frame A
+R = rot2(-50,'deg');
+
+% Create a vector pb of the point (1,4) in the coordinate 
+% frame B and find it's respective coordinates in frame A 
+% using the rotation matrix R
+pb = [1;4]
+pa = R*pb
+
+% Now convert point pa back to the reference frame B using
+% the transpose of the matrix R, store the result in variable
+% pb_from_pa
+pb_from_pa = R'*pa
+
+% View the plot a rotated coordinate frame. There is no need to change the following code.
+trplot2(R); axis square;

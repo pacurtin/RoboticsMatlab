@@ -1,0 +1,34 @@
+% Create a column vector pa to describe the point with coordinate (2,3) using a semicolon to stack the vector.
+
+pa = [2; 3]
+
+% Transpose a row vector [1 4] into a column vector pb using the symbol '.
+
+pb = [1 4]'
+
+% Create a vector ph which has only a horizontal component.
+
+ph = [2; 0]
+
+% Create a vector pv which has only a vertical component.
+
+pv = [0; 3]
+
+% Set the variable psum as the sum of the two vectors ph and pv.
+
+psum = ph + pv
+
+
+% You can also practise the expressions described for two unit vectors. 
+
+% Enter xhat = [1; 0]
+
+xhat =[1;0]
+
+% Enter yhat = [0; 1]
+
+yhat=[0;1]
+
+% Enter phats = 2*xhat + 3*yhat
+
+phats = 2*xhat + 3*yhat
