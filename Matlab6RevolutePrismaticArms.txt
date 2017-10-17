@@ -1,36 +1,54 @@
-syms q1 q2
+%% Provided variables
 a1 = 0.8; a2 = 0.3;
-P1 = [0 1.2]; % x=0 y =1.2
-
+P1 = [0 1.2];
 q2_min = 0.1;
 q2_max = 0.9;
 Points = [0.5 0.6 0.7 0.8 0.9 1 1.1;
           0.5 0.6 0.7 0.8 0.9 1 1.1]; 
+        
+%% YOUR ANSWER BELOW HERE
+% E is at P1=[0 1.2]
+% q1 is rotation around origin in radians
+% q2 is the lenght of the prismatic joint in meters. Must be between min and max.
+% T = R(q1)Ty(a1)Tx(q2)Ty(a2)
 
-atan2(1,2)
 
+syms q1 q2
 E = trchain2('R(q1) Ty(a1) Tx(q2) Ty(a2)', [q1 q2])
 
 x = E(1,3)
 y = E(2,3)
 
 squareAndAdd = (x^2)+(y^2)
+%I threw this into wolfram to get: (x^2)+(y^2) = (q2^2)+121/100
+%Solved to get q2 = sqrt(0.23)
 lenghtOfQ2ForP1 = sqrt(0.23)
 
 aa = q2
 ba = -a1-a2
 ca = 0
 atheta = atan(ca/sqrt((aa*aa)+(ba*ba)-(ca*ca))) - atan(aa/ba)
-ab = a1+a2
-bb = q2
-cb = 1.2
-btheta = atan(cb/sqrt((ab*ab)+(bb*bb)-(cb*cb))) - atan(ab/bb)
+% only need one of the two possibilities for theta
+%ab = a1+a2
+%bb = q2
+%cb = 1.2
+%btheta = atan(cb/sqrt((ab*ab)+(bb*bb)-(cb*cb))) - atan(ab/bb)
 
 radiansOfQ1ForP1=atan(10*lenghtOfQ2ForP1/11)
 q = [radiansOfQ1ForP1, lenghtOfQ2ForP1]
 
+%Rearrange for q2: (x^2)+(y^2) = (q2^2)+121/100
+%q2 = sqrt((x^2)+(y^2)-(121/100))
+
 for i = 1:1:7
-   testX=Points()
-   testY=Points()
-   reachable(i) = true
+   testX=Points(1,i)
+   testY=Points(2,i)
+   testQ2= sqrt((testX^2)+(testY^2)-(121/100))
+   if(testQ2>=q2_min && testQ2<=q2_max)
+       reachable(i) = true
+   else
+       reachable(i) = false
+   end
 end
+
+%reachable =
