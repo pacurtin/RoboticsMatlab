@@ -1,0 +1,22 @@
+% Calculate x(t), with x varying from -2 to +3 and t varying from 0 to 1 in 10 steps.
+% Store the time vector in t1 and calculated trajectory in variable x1.
+t1 = linspace(0,1,10)
+x1= linspace(-2,3,10)
+
+% Repeat this step for 100 time steps.
+% Store the time vector in t2 and calculated trajectory in variable x2.
+t2 = linspace(0,1,100)
+x2 = linspace(-2,3,100)
+
+% Modify to achieve the same motion over 5 seconds (still using 100 steps).
+% Store the time vector in t3 and calculated trajectory in variable x3.
+t3 = linspace(0,5,100)
+x3 = linspace(4,-1,100)
+
+% Using the tpoly function plot x(t) against t for a motion from -2 to +3 over 5 seconds in 100 time steps.
+% Store the time vector in tpoly and calculated trajectory in variable xp.
+tp = linspace(0,5,100)
+xp = tpoly(-2, 3, 100)'
+
+% To visualise the resulting trajectory, uncomment the following line of code.
+plot(tp,xp);
