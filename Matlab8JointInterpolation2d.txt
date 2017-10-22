@@ -1,0 +1,60 @@
+%% Provided variables
+a1 = 0.8; a2 = 0.3;
+pA = [0 2];
+pB = [3 0];
+
+% For each position pA and pB determine the corresponding joint angles 
+% qA and qB using inverse kinematics.
+
+%qA = inverseKinematics(pA(1),pA(2))
+%qA = [0.9884, 1.6703]
+%qB = [-0.3754, 2.7911]
+%qB = inverseKinematics(pB(1),pB(2))
+
+%atan(0/sqrt(1.5799))
+%atan(1.6703/-1.1)
+%atan2(0,sqrt(1.5799))
+atan2(1.6703,-1.1)
+
+%atan(3/0)
+%atan(2.7911/-1.1)
+%atan2(3,0)
+%atan2(2.7911,-1.1)
+
+% Try using forward kinematics to check that the joint configurations 
+
+% Compute a joint interpolated trajectory between qA and qB in fifty
+% steps over 10 seconds using the jtraj function as discussed previously. 
+% Store this in the variable qtraj.
+%qtraj = jtraj(qA,qB,50)
+
+% Compute the forward kinematics for every point along the joint trajectory qtraj.
+%for i = 1:1:50
+%   x=qtraj(1,i)
+%   y=qtraj(2,i)
+%   testQ2= sqrt((testX^2)+(testY^2)-(121/100))
+%   if(testQ2>=q2_min && testQ2<=q2_max)
+%       reachable(i) = true
+%   else
+%       reachable(i) = false
+%   end
+%end
+
+
+%x = 
+%y = 
+
+% If you have correctly computed the end-effector trajectory, you can visualise it using
+% figure; plot(x,y)
+% xlabel('x'); ylabel('y'); grid on 
+
+function ik = inverseKinematics(x,y)
+%Function returns [q1,q2] for this specific robot
+q2 = sqrt((x^2)+(y^2)-(121/100))
+a = q2
+b = -1.1
+c = x
+q1 = atan2(c,sqrt((a*a)+(b*b)-(c*c))) - atan2(a,b)
+q = [q1, q2]
+ik = q
+end

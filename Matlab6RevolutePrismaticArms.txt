@@ -21,7 +21,9 @@ y = E(2,3)
 
 squareAndAdd = (x^2)+(y^2)
 %I threw this into wolfram to get: (x^2)+(y^2) = (q2^2)+121/100
-%Solved to get q2 = sqrt(0.23)
+%Rearrange for q2
+%q2 = sqrt((x^2)+(y^2)-(121/100))
+%Subbed in 0 and 1.2 for x and y to get q2 = sqrt(0.23)
 lenghtOfQ2ForP1 = sqrt(0.23)
 
 aa = q2
@@ -37,9 +39,6 @@ atheta = atan(ca/sqrt((aa*aa)+(ba*ba)-(ca*ca))) - atan(aa/ba)
 radiansOfQ1ForP1=atan(10*lenghtOfQ2ForP1/11)
 q = [radiansOfQ1ForP1, lenghtOfQ2ForP1]
 
-%Rearrange for q2: (x^2)+(y^2) = (q2^2)+121/100
-%q2 = sqrt((x^2)+(y^2)-(121/100))
-
 for i = 1:1:7
    testX=Points(1,i)
    testY=Points(2,i)
@@ -50,5 +49,3 @@ for i = 1:1:7
        reachable(i) = false
    end
 end
-
-%reachable =
