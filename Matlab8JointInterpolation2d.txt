@@ -6,55 +6,57 @@ pB = [3 0];
 % For each position pA and pB determine the corresponding joint angles 
 % qA and qB using inverse kinematics.
 
-%qA = inverseKinematics(pA(1),pA(2))
-%qA = [0.9884, 1.6703]
-%qB = [-0.3754, 2.7911]
-%qB = inverseKinematics(pB(1),pB(2))
-
-%atan(0/sqrt(1.5799))
-%atan(1.6703/-1.1)
-%atan2(0,sqrt(1.5799))
-atan2(1.6703,-1.1)
-
-%atan(3/0)
-%atan(2.7911/-1.1)
-%atan2(3,0)
-%atan2(2.7911,-1.1)
-
-% Try using forward kinematics to check that the joint configurations 
+qA = inverseKinematics(pA(1),pA(2),a1,a2)
+qB = inverseKinematics(pB(1),pB(2),a1,a2) 
 
 % Compute a joint interpolated trajectory between qA and qB in fifty
 % steps over 10 seconds using the jtraj function as discussed previously. 
 % Store this in the variable qtraj.
-%qtraj = jtraj(qA,qB,50)
+qtraj = jtraj(qA,qB,50)
 
 % Compute the forward kinematics for every point along the joint trajectory qtraj.
-%for i = 1:1:50
-%   x=qtraj(1,i)
-%   y=qtraj(2,i)
-%   testQ2= sqrt((testX^2)+(testY^2)-(121/100))
-%   if(testQ2>=q2_min && testQ2<=q2_max)
-%       reachable(i) = true
-%   else
-%       reachable(i) = false
-%   end
-%end
+for i = 1:1:50
+   q1=qtraj(i,1);%theta
+   q2=qtraj(i,2);%length
+   E = trchain2('R(q1) Ty(a1) Tx(q2) Ty(a2)', [q1 q2]);
+   x(i) = E(1,3);
+   y(i) = E(2,3);
+end
 
-
-%x = 
-%y = 
+%Just transposing because it's how the marking scheme wants the answer.
+x = x'
+y = y'
 
 % If you have correctly computed the end-effector trajectory, you can visualise it using
 % figure; plot(x,y)
 % xlabel('x'); ylabel('y'); grid on 
 
-function ik = inverseKinematics(x,y)
+
+
+function ik = inverseKinematics(x,y,a1,a2)
 %Function returns [q1,q2] for this specific robot
+
+%First calculates the two possible sets of inverse kinematics for the given joint position
 q2 = sqrt((x^2)+(y^2)-(121/100))
-a = q2
-b = -1.1
-c = x
+a = q2;
+b = -1.1;
+c = x;
 q1 = atan2(c,sqrt((a*a)+(b*b)-(c*c))) - atan2(a,b)
+
+%Use forward kinematics to see if this value of q1 is correct.
+E = trchain2('R(q1) Ty(a1) Tx(q2) Ty(a2)', [q1 q2]);
+xFound = E(1,3);
+yFound = E(2,3);
+
+if abs(x-xFound) > 0.01 || abs(y-yFound) > 0.01
+    %Cant just check x==xFound... annoying
+    %Value of q1 was incorrect so it must be the other one
+    a = 1.1;
+    b = q2;
+    c = y;
+    q1 = atan2(c,sqrt((a*a)+(b*b)-(c*c))) - atan2(a,b)
+end
+
 q = [q1, q2]
-ik = q
+ik = q;
 end
