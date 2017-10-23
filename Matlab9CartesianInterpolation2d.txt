@@ -10,15 +10,28 @@ P = mtraj(@tpoly, pA, pB, 50)
 % For each position along the end-effector trajectory determine the 
 % corresponding joint angles using inverse kinematics. Store the joint 1
 % values in column 1 and the joint 2 values in column 2 of the variable qtraj.
-%qtraj =
 
 for i = 1:1:50
    inKin = inverseKinematics(P(i,1),P(i,2),a1,a2);
    qtraj(i,1) = inKin(1,1);
-   qtraj(i,2) = inKin(1,2);    %unit should be m not cm?
+   qtraj(i,2) = inKin(1,2);    %maybe unit should be m not cm?
 end
 
-disp(qtraj)
+
+
+%for i = 1:1:50
+%   inKin1 = inverseOne(P(i,1),P(i,2),a1,a2);
+%   inKin2 = inverseTwo(P(i,1),P(i,2),a1,a2);
+%   q1Values(i,1) = inKin1(1);
+%   q1Values(i,2) = inKin2(1);
+%   q2Values(i,1) = inKin1(2);        %This gives me a 50x4 matrix... still not right.
+%   q2Values(i,2) = inKin2(2);
+%end
+
+%qtraj= [q1Values,q2Values]
+%qtraj = qtraj'
+%size(qtraj)
+%disp(qtraj)
 
 % If you have correctly computed the joint trajectories, you can visualise these with
 figure; plot(linspace(0,10,50),qtraj)
@@ -42,6 +55,27 @@ xlabel('x'); ylabel('y'); grid on
 
 
 
+function inv1 = inverseOne(x,y,a1,a2)
+%Function returns a possible [q1,q2] for this robot
+q2 = sqrt((x^2)+(y^2)-(121/100));
+a = q2;
+b = -1.1;
+c = x;
+q1 = atan2(c,sqrt((a*a)+(b*b)-(c*c))) - atan2(a,b);
+q = [q1, q2];
+inv1 = q;
+end
+
+function inv2 = inverseTwo(x,y,a1,a2)
+%Function returns a different possible [q1,q2] for this robot
+q2 = sqrt((x^2)+(y^2)-(121/100));
+a = 1.1;
+b = q2;
+c = y;
+q1 = atan2(c,sqrt((a*a)+(b*b)-(c*c))) - atan2(a,b);
+q = [q1, q2];
+inv2 = q;
+end
 
 
 function ik = inverseKinematics(x,y,a1,a2)
